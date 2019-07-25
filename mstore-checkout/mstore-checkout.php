@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mstore CheckOut Plugin and API
  * Plugin URI: http://inspireui.com
- * Description: The MStore Checkout Wordpress Plugin which use for the Mstore app - Complete React Native template for e-commerce
+ * Description: The MStore Checkout Wordpress Plugin which use for the Mstore Pro and FluxStore Pro
  * Version: 1.1.6
  * Author: InspireUI
  * Author URI: http://inspireui.com
