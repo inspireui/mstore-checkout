@@ -462,6 +462,35 @@ class JSON_API_MStore_User_Controller
              );    
    }
   
+  public function get_currentuserinfo() {
+		global $json_api;
+		if (!$json_api->query->cookie) {
+			$json_api->error("You must include a 'cookie' var in your request. Use the `generate_auth_cookie` Auth API method.");
+		}
+		$user_id = wp_validate_auth_cookie($json_api->query->cookie, 'logged_in');
+		if (!$user_id) {
+			$json_api->error("Invalid authentication cookie. Use the `generate_auth_cookie` Auth API method.");
+		}
+		$user = get_userdata($user_id);
+		preg_match('|src="(.+?)"|', get_avatar( $user->ID, 32 ), $avatar);
+		return array(
+			"user" => array(
+				"id" => $user->ID,
+				"username" => $user->user_login,
+				"nicename" => $user->user_nicename,
+				"email" => $user->user_email,
+				"url" => $user->user_url,
+				"registered" => $user->user_registered,
+				"displayname" => $user->display_name,
+				"firstname" => $user->user_firstname,
+				"lastname" => $user->last_name,
+				"nickname" => $user->nickname,
+				"description" => $user->user_description,
+				"capabilities" => $user->wp_capabilities,
+				"avatar" => $avatar[1]
+			)
+		);
+	}
 }
  
  
