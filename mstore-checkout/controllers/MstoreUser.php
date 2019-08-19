@@ -410,15 +410,16 @@ class JSON_API_MStore_User_Controller
     * Post commment function
     */
     public function post_comment(){
-       global $json_api;
+    global $json_api;
       if (!$json_api->query->cookie) {
                 $json_api->error("You must include a 'cookie' var in your request. Use the `generate_auth_cookie` method.");
             }
       $user_id = wp_validate_auth_cookie($json_api->query->cookie, 'logged_in');
         
-            if (!$user_id) {
-                $json_api->error("Invalid cookie. Use the `generate_auth_cookie` method.");
-            }
+      if (!$user_id) {
+        $json_api->error("Invalid cookie. Use the `generate_auth_cookie` method.");
+      }
+
      if ( !$json_api->query->post_id ) {
       $json_api->error("No post specified. Include 'post_id' var in your request.");
       } elseif (!$json_api->query->content ) {
@@ -490,7 +491,49 @@ class JSON_API_MStore_User_Controller
 				"avatar" => $avatar[1]
 			)
 		);
-	}
+    }
+    
+    /**
+     * Get Point Reward by User ID
+     *
+     * @return void
+     */
+    function get_points(){       
+        global $wc_points_rewards;
+        global $json_api;
+
+        $user_id = (int) $_GET['user_id'];
+        $current_page = (int) $_GET['page'];
+       
+		$points_balance = WC_Points_Rewards_Manager::get_users_points( $user_id );
+		$points_label   = $wc_points_rewards->get_points_label( $points_balance );
+		$count        = apply_filters( 'wc_points_rewards_my_account_points_events', 5, $user_id );
+		$current_page = empty( $current_page ) ? 1 : absint( $current_page );
+        
+		$args = array(
+			'calc_found_rows' => true,
+			'orderby' => array(
+				'field' => 'date',
+				'order' => 'DESC',
+			),
+			'per_page' => $count,
+			'paged'    => $current_page,
+			'user'     => $user_id,
+        );
+        $total_rows = WC_Points_Rewards_Points_Log::$found_rows;
+		$events = WC_Points_Rewards_Points_Log::get_points_log_entries( $args );
+
+        
+        return array(
+            'points_balance' => $points_balance,
+            'points_label'   => $points_label,
+            'total_rows'     => $total_rows,
+            'page'   => $current_page,
+            'count'          => $count,
+            'events'         => $events
+        );
+    }  
+
 }
  
  
