@@ -232,7 +232,7 @@ function bt_image_resize_dimensions($orig_w, $orig_h, $dest_w, $dest_h, $crop = 
  */
 function bt_image_resize( $file, $max_w, $max_h, $crop = false, $suffix = null, $dest_path = null, $jpeg_quality = 90 ) {
 
-	$image = wp_load_image( $file );
+	$image = wp_get_image_editor( $file );
 	if ( !is_resource( $image ) )
 		return new WP_Error( 'error_loading_image', $image, $file );
 
