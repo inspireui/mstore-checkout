@@ -10,7 +10,8 @@ Either you are business people with raising sale ambition or developers with fas
 Faster- Smoother- Closer.
 
 REFERENCE LINKS
-Company Website: https://inspireui.com
-iOS demo: https://apps.apple.com/us/app/mstore-flutter/id1469772800
-Android demo: https://play.google.com/store/apps/details?id=com.inspireui.fluxstore
-Youtube Channel: https://www.youtube.com/inspireui
+----
+- Company Website: https://inspireui.com
+- iOS demo: https://apps.apple.com/us/app/mstore-flutter/id1469772800
+- Android demo: https://play.google.com/store/apps/details?id=com.inspireui.fluxstore
+- Youtube Channel: https://www.youtube.com/inspireui
